@@ -1,0 +1,23 @@
+
+
+{% extends "index.html" %}
+{% block title %} chat delete {% endblock %}
+
+{% block content %}
+
+    <section class="container">
+        <h2 class="display-6"><small>chat delete <sub>delete</sub></small></h2>
+        <form class="card m-2" method="POST">
+            {% csrf_token %}
+            <div class="card-body">
+                <div class="my-2">
+                    <a class="btn btn-sm btn-outline-primary" href="{% url 'chat' %}">cancellation and refund</a>
+                </div>
+                <div class="my-2">
+                    <button class="btn btn-sm btn-outline-danger" type="submit">delete</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+{% endblock content %}

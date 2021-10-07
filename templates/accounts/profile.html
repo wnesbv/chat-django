@@ -1,0 +1,41 @@
+
+
+{% extends 'index.html' %}
+{% block title %} profile {% endblock %}
+
+{% block content %}
+
+    <section class="container">
+        <h2 class="display-6"><small>profile</small></h2>
+        <div class="card m-4">
+            <div class="pagination thumbnail">
+                <div class="account_photo">
+                    <img class="account_img" src="{{ user.picture.url }}" alt="{{ user.nickname }}" title="{{ user.nickname }}" />
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h2 class="account-heading">{{ user.nickname }}</h2>
+                <p class="text-secondary">{{ user }}</p>
+            </div>
+
+            <form class="card-body" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <ul class="list-group my-2">
+                    <li>{{ form.nickname.errors }}</li>
+                    <li class="my-2">{{ form.nickname.label_tag }}</li>
+                    <li class="list-group-item">{{ form.nickname }}</li>
+                </ul>
+                <ul class="list-group my-2">
+                    <li>{{ form.picture.errors }}</li>
+                    <li class="my-2">{{ form.picture.label_tag }}</li>
+                    <li class="list-group-item">{{ form.picture }}</li>
+                </ul>
+
+                <button class="btn btn-outline-primary btn-sm my-4" type="submit">update</button>
+            </form>
+
+        </div>
+    </section>
+
+{% endblock content %}

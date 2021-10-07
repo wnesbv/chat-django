@@ -1,0 +1,57 @@
+
+
+{% extends 'accounts/base.html' %}
+{% block title %} create account {% endblock %}
+
+{% block content %}
+
+    <section class="container">
+        <h2 class="display-6"><small>create account</small></h2>
+        <div class="card m-4">
+            <form class="card-body" method="POST">
+                {% csrf_token %}
+
+                    <ul class="list-group my-2">
+                        <li>{{ form.email.errors }}</li>
+                        <li class="my-2">{{ form.email.label_tag }}</li>
+                        <li>{{ form.email }}</li>
+                    </ul>
+                    <ul class="list-group my-2">
+                        <li>{{ form.nickname.errors }}</li>
+                        <li class="my-2">{{ form.nickname.label_tag }}</li>
+                        <li>{{ form.nickname }}</li>
+                    </ul>
+                    <ul class="list-group my-2">
+                        <li>{{ form.password1.errors }}</li>
+                        <li class="my-2">{{ form.password1.label_tag }}</li>
+                        <li>{{ form.password1 }}</li>
+                    </ul>
+                    <ul class="list-group my-2">
+                        <li>{{ form.password2.errors }}</li>
+                        <li class="my-2">{{ form.password2.label_tag }}</li>
+                        <li>{{ form.password2 }}</li>
+                    </ul>
+
+                <div class="my-4">
+                    <input class="btn btn-outline-primary btn-sm" type="submit" name="submit" id="submit" value="Sign up"/>
+                </div>
+            </form>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="lead">
+                        <small class="mx-2">Have already an account ?</small>
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'accounts:login' %}">Login here</a>
+                    </span>
+                </li>
+                <li class="list-group-item">
+                    <span class="lead">
+                        <small class="mx-2">Forgot Password ?</small>
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'accounts:reset_password' %}">Reset Password</a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+{% endblock content %}

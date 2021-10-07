@@ -1,0 +1,16 @@
+
+{% extends 'index.html' %}
+{% block title %} list notifications {% endblock %}
+
+{% block content %}
+
+	<section class="container">
+		<h2 class="display-6">list notifications</h2>
+		<ul class="notifications">
+			{% for notice in notifications %}
+				{% include 'notifications/notice.html' %}
+			{% endfor %}
+		</ul>
+	</section>
+
+{% endblock %}

@@ -1,0 +1,236 @@
+
+{% extends "index.html" %}
+{% load static %}
+{% load chat_tags %}
+{% load accounts_tags %}
+
+{% block title %}Chat Room{% endblock %}
+
+{% block chat_room %}
+
+    <section class="container chat_list">
+        <div class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <i class="bi bi-chat-text-fill mx-2"></i>chat
+            <i class="bi bi-box-arrow-in-right mx-2"></i>
+            {{ room_name }}
+            <i class="bi bi-person-lines-fill mx-2"></i>
+            <img class="chat_img_receive" src="{{ user.picture.url }}" /> {{user.nickname}}
+        </div>
+
+        <div class="card chat" id="all_messages">
+            <ul class="list-group">
+                {% if user.is_authenticated %}
+                    {% for item in chat_messages %}
+
+                        {% if item.nick_chat == user %}
+                            <li class="col-10 ms-auto list-group-item">
+                                <span class="frames_chat_img">
+                                    <img class="chat_img" src="{{ item.nick_chat.picture.url }}" alt="{{ item.nick_chat.nickname }}" />
+                                </span>
+
+                                <span class="card-header">
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock-history"></i>
+                                        {{ item.created|date:"Y n j G:i:s" }}
+                                    </small>
+                                    <small class="pull-right primary-font mx-1">
+                                        <i class="bi bi-person-fill mx-1"></i>
+
+                                        {# 1... #}
+                                        {% if item.nick_chat != user %}
+                                            {% if item.nick_chat.status %}
+                                                <i class='bi bi-record-circle'></i>
+                                                {% else %}
+                                                <i class='bi bi-circle'></i>
+                                            {% endif %}
+                                        {% endif %}
+
+                                        {{ item.nick_chat }}
+                                    </small>
+                                </span>
+                                <span class="card-body">
+                                    <span class="m-0">
+                                        {{ item.msg_chat|safe }}
+                                    </span>
+                                </span>
+
+                                {% if item.nick_chat == user %}
+                                    <span class="float-end">
+                                        <span class="mx-1">
+                                            <a class="btn btn-sm btn-outline-primary" href="{% url 'update' item.pk %}">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                        </span>
+                                        <span class="mx-1">
+                                            <a class="btn btn-sm btn-outline-danger float-end" href="{% url 'delete' item.pk %}">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </span>
+                                    </span>
+                                {% endif %}
+
+                            </li>
+
+                        {% else %}
+                            <li class="col-10 mx-0 mb-3 list-group-item">
+                                <span class="frames_chat_img">
+                                    <img class="chat_img" src="{{ item.nick_chat.picture.url }}" alt="{{ item.nick_chat.nickname }}" />
+                                </span>
+
+                                <span class="card-header">
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock-history"></i>
+                                        {{ item.created|date:"Y n j G:i:s" }}
+                                    </small>
+                                    <small class="pull-right primary-font mx-1">
+                                        <i class="bi bi-person-fill mx-1"></i>
+
+                                        {# 2... #}
+                                        {% if item.nick_chat != user %}
+                                            {% if item.nick_chat.status %}
+                                                <i class='bi bi-record-circle'></i>
+                                                {% else %}
+                                                <i class='bi bi-circle'></i>
+                                            {% endif %}
+                                        {% endif %}
+
+                                        {{ item.nick_chat }}
+                                    </small>
+                                </span>
+                                <span class="card-body">
+                                    <span class="m-0">
+                                        {{ item.msg_chat|safe }}
+                                    </span>
+                                </span>
+
+                                {% if item.nick_chat == user %}
+                                    <span class="float-end">
+                                        <span class="mx-1">
+                                            <a class="btn btn-sm btn-outline-primary" href="{% url 'update' item.pk %}">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                        </span>
+                                        <span class="mx-1">
+                                            <a class="btn btn-sm btn-outline-danger float-end" href="{% url 'delete' item.pk %}">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </span>
+                                    </span>
+                                {% endif %}
+
+                            </li>
+
+                        {% endif %}
+                    {% endfor %}
+
+                    {% else %}
+                        <div class="alert alert-warning" role="alert">please login</div>
+                {% endif %}
+
+            </ul>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="pagination">
+                {% if chat_messages.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link next" href="?{{ page_request_variable }}=1">
+                            <i class="bi bi-arrow-left-square"></i>
+                        </a>
+                    </li>
+
+                    {% if chat_messages.number > 2 %}
+                        <li class="page-item">
+                            <span class="page-link ">...</span>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item">
+                        <a class="page-link page-numbers" href="?{{ page_request_variable }}={{ chat_messages.previous_page_number }}">
+                            {{chat_messages.previous_page_number}}
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if chat_messages.has_next or chat_messages.has_previous %}
+                    <li class="page-item">
+                        <span class="page-link page-numbers current" aria-current="page">{{chat_messages.number}}</span>
+                    </li>
+                    {% else %}
+                        <li class="page-item">
+                            <span class="page-link page-numbers current" aria-current="page">1</span>
+                        </li>
+                {% endif %}
+
+                {% if chat_messages.has_next %}
+                    <li class="page-item">
+                        <a class="page-link page-numbers" href="?{{ page_request_variable }}={{ chat_messages.next_page_number }}">
+                            {{chat_messages.next_page_number}}
+                        </a>
+                    </li>
+
+                    {% if chat_messages.paginator.num_pages > chat_messages.next_page_number %}
+                        <li class="page-item">
+                            <span class="page-link ">...</span>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item">
+                        <a class="page-link next" href="?{{ page_request_variable }}={{ chat_messages.next_page_number }}">
+                            <i class="bi bi-arrow-right-square"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+
+        <div class="card-footer my-4">
+            <input class="col-11 form-control input-sm" id="btn-input" type="text" placeholder="Type your message here..."/>
+            <button class="btn btn-primary btn-sm m-2" id="btn-chat">send</button>
+        </div>
+    </section>
+
+
+
+{% endblock %}
+
+
+{% block js %}
+
+<script>
+    $('#all_messages').scrollTop($('#all_messages')[0].scrollHeight);
+    const room_mame = '{{ room_name }}';
+    const ws_scheme = window.location.protocol == 'https:' ? 'wss' : 'ws';
+    const websocket_str = `${ws_scheme}://${window.location.host}/ws/chat/${room_mame}/`;
+    const chatSocket = new WebSocket(websocket_str);
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        const { message } = data;
+        const { now_time } = data;
+        const { user } = data;
+        const receive_user = '{{user}}';
+        if (receive_user === user) {
+            $(`<li class="toast_chat list-group-item"><span class="card-header"><img class="chat_img_receive me-2" src="{% static 'my.svg' %}" /><small class="text-muted"><i class="bi bi-clock mx-1"></i>${now_time}</small><span class="mx-2">${user}</span></span><span class="card-body"><span class="m-0">${message}</span></span></li>`).appendTo($('.chat'))
+        } else {
+            $(`<li class="toast_chat_in list-group-item"><span class="card-header"><img class="chat_img_receive me-2" src="{% static 'in.svg' %}" /><small class="text-muted"><i class="bi bi-clock mx-1 mx-1"></i>${now_time}</small><span class="mx-2">${user}</span></span><span class="card-body"><span class="m-0">${message}</span></span></li>`).appendTo($('.chat'))
+        }
+    };
+        $('#btn-input').focus();
+        $('#btn-input').keyup((e) => {
+          if (e.keyCode === 13) {
+                $('#btn-chat').click();
+            }
+        });
+        $('#btn-chat').click(() => {
+          const message = $('#btn-input').val();
+          chatSocket.send(JSON.stringify({
+                message,
+          }));
+          $('#btn-input').val('');
+        });
+
+</script>
+
+{% endblock %}

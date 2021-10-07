@@ -1,0 +1,21 @@
+
+
+{% extends "index.html" %}
+{% block title %} add as a friend {% endblock %}
+
+{% block content %}
+
+    <section class="container">
+        <h2 class="display-6">add as a friend<sub class="mx-2"><small>(add)</small></sub></h2>
+        <hr>
+		{% if not to_username == request.user.nickname %}
+			<form class="list-inline my-4" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="to_username" value="{{ to_username }}" />
+				{{ form.as_ul }}
+				<input class="btn btn-sm btn-outline-primary my-4" type="submit" value="add {{ to_username }} as a friend" />
+			</form>
+		{% endif %}
+	</section>
+
+{% endblock %}

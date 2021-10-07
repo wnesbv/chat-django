@@ -1,0 +1,46 @@
+
+
+{% extends 'accounts/base.html' %}
+{% block title %} login {% endblock %}
+
+{% block content %}
+
+    <section class="container">
+        <h2 class="display-6">login</h2>
+        <div class="card m-4">
+            <form class="card-body" method="POST">
+                {% csrf_token %}
+                    <ul class="list-group my-2">
+                        <li>{{ form.email.errors }}</li>
+                        <li class="my-1">{{ form.email.label_tag }}</li>
+                        <li class="list-group-item">{{ form.email }}</li>
+                    </ul>
+                    <ul class="list-group my-2">
+                        <li>{{ form.password.errors }}</li>
+                        <li class="my-1">{{ form.password.label_tag }}</li>
+                        <li class="list-group-item">{{ form.password }}</li>
+                    </ul>
+
+                <div class="my-4">
+                    <input class="btn btn-outline-primary btn-sm" type="submit" name="submit" id="submit" value="Sign In"/>
+                </div>
+            </form>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="lead">
+                        <small class="mx-2">Don't have an account ?</small>
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'accounts:signup' %}">sign up here</a>
+                    </span>
+                </li>
+                <li class="list-group-item">
+                    <span class="lead">
+                        <small class="mx-2">Forgot Password ?</small>
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'accounts:reset_password' %}">reset password</a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+{% endblock %}

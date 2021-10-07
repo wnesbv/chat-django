@@ -1,0 +1,123 @@
+
+
+{% load static %}
+{% load notifications_tags %}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img class="navbar_brand_img" src="{% static "home.svg" %}"></a>
+            {% if user.is_authenticated %}
+                <span class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarnickname" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <sup>
+                        <i class="bi bi-check"></i>
+                        {{ user }}
+                        </sup>
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="navbarnickname">
+                        <li class="dropdown-item">
+                            <a class="text-muted mx-2" href="{% url 'accounts:profile' %}">{{ user.nickname }}</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a class="text-muted mx-2" href="{% url 'accounts:change_password' %}">change password</a>
+                        </li>
+                    </ul>
+                </span>
+
+                <span class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="unread" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-bell"></i>
+                        <span>
+                            {% notifications_unread as unread_count %}
+                            {% if unread_count %}
+                                {% live_notify_badge %}
+                            {% endif %}
+                        </span>
+
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="unread">
+                        <li class="dropdown-item">
+                            {% live_notify_list %}
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'notifications:all' %}">all list</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'notifications:unread' %}">unread list</a>
+                        </li>
+
+                    </ul>
+
+                </span>
+            {% endif %}
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:home' %}">home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'chat' %}">chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'chat_user' %}">user-chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'chat_friends' %}">friends-chat</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                friendship
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'friendship_view_users' %}">all users</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'all_friends' nickname=request.user.nickname %}">user's friends</a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'to_request_list' %}">new requests for friendship</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'to_requests_rejected' %}">rejected friendship requests</a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                            </ul>
+                        </li>
+                        {# ... #}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                             <a class="nav-link" href="{% url 'accounts:signup' %}">signup</a>
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>

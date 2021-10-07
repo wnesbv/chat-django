@@ -1,0 +1,43 @@
+
+
+<li class="alert alert-{{ notice.level }} alert-dismissible fade show" role="alert">
+    <a class="float-end" href="{% url 'notifications:delete' notice.slug %}">
+        delete
+    </a>
+    <a class="" href="{% url 'notifications:mark_as_read' notice.slug %}">
+       mark as read
+    </a>
+
+    <span class="pagination">
+        {% if notice.unread %}
+            <i class="bi bi-envelope mx-2"></i>
+            {% else %}
+            <i class="bi bi-envelope-open mx-2"></i>
+        {% endif %}
+        <span>
+            <sup>verb:</sup>
+            <span class="mx-2">{{ notice.verb }}</span>
+        </span>
+        <time>{{ notice.timesince }} ago</time>
+    </span>
+    <span class="pagination">
+        <span>
+            <span>actor: {{ notice.actor }}...{{ notice.actor.room_name }}</span>
+            <span class="mx-2">slug: {{ notice.slug }}</span>
+            {% if notice.target %}
+                <a class="btn btn-sm btn-outline-primary mx-1" href="{{ notice.target }}">{{ notice.target }}</a>
+            {% endif %}
+            {% if notice.action_object %}
+                <a class="btn btn-sm btn-outline-primary mx-1" href="{{ notice.action_object }}">{{ notice.action_object }}</a>
+            {% endif %}
+        </span>
+        <p class="mx-2">description: {{ notice.description|linebreaksbr }}</p>
+        <span class="notice-actions">
+            <span>action</span>
+            {% for action in notice.data.actions %}
+                <a class="btn" href="{{ action.href }}">{{ action.title }}</a>
+            {% endfor %}
+        </span>
+    </span>
+
+</li>

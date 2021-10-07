@@ -1,0 +1,30 @@
+
+
+{% extends "index.html" %}
+{% load static %}
+{% block title %} all users {% endblock %}
+
+{% block content %}
+    <section class="container">
+        <h2 class="display-6">all users <sub><small>(user_actions)</small></sub></h2>
+        <div class="row">
+
+            {% for item in users %}
+                <ul class="list-group col-2 my-4">
+                    {% if user %}
+                        <li class="list-group-item">
+                            <img class="chat_img" src="{{ item.picture.url }}" alt="{{ item.nickname }}" />
+                            {{ item.nickname }}
+                        </li>
+                        <li class="list-group-item">
+                            <a class="btn btn-sm btn-outline-primary" href="{% url 'add_friend' item.nickname %}">add as friend</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endfor %}
+
+        </div>
+
+{% endblock %}
+{% comment %}
+{% endcomment %}

@@ -1,0 +1,119 @@
+
+
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+
+.card.chat{
+    min-height: 44vh;
+    animation: chat 1s;
+}
+.chat_list{
+    overflow-x: hidden;
+}
+.navbar_brand_img{
+    width: auto;
+    height: 2em;
+    margin: auto 0 auto 1em;
+}
+
+.frames_chat_img{
+    width: 2.5em;
+    height: 2.5em;
+    display: inline-block;
+    overflow: hidden;
+}
+.chat img{
+    width: auto;
+    height: 2.5em;
+}
+
+@keyframes chat_img{
+    2%{
+        opacity: 0;
+        transform: scale(0);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes chat{
+    0%{
+        opacity: 0;
+    }
+    20%{
+        transform: translate(0,50%);
+    }
+    100%{
+        opacity: 1;
+        transform: translate(0,0);
+    }
+}
+
+.chat_img_receive{
+    width: 2em;
+    height: auto;
+}
+.chat_img_left{
+    width: 3em;
+    height: auto;
+}
+
+
+.toast_chat{
+    width: 83.3333333333%;
+    margin: .5em 1em .5em auto;
+    padding: .5em;
+    font-size: 1em;
+    pointer-events: auto;
+    border-radius: .25rem;
+    background-color: rgba(255,255,255,.85);
+    box-shadow: 0 .4rem .8rem rgb(0 0 0 / 15%);
+    animation: toastchat 1s;
+}
+.toast_chat_in{
+    width: 80%;
+    margin: .5em 15% .5em auto;
+    padding: 1em;
+    font-size: 1em;
+    pointer-events: auto;
+    border-radius: .25rem;
+    background-color: rgba(255,255,255,.85);
+    background-clip: padding-box;
+    box-shadow: 0 .4rem .8rem rgb(0 0 0 / 15%);
+    animation: toastchat_in 1s;
+}
+
+@keyframes toastchat{
+    0%{
+        opacity: 0;
+        transform: scale(.4) translate(44%,0);
+    }
+    50%{
+        opacity: .5;
+        transform: scale(1.05) translate(-5%,0);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1) translate(0,0);
+    }
+}
+@keyframes toastchat_in{
+    0%{
+        opacity: 0;
+        transform:  scale(.4) translate(-66%,0);
+    }
+    50%{
+        opacity: .5;
+        transform: scale(1.05) translate(10%,0);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1) translate(0,0);
+    }
+}

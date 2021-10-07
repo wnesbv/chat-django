@@ -1,0 +1,21 @@
+
+
+{% extends "index.html" %}
+{% block title %} rejected list {% endblock %}
+
+{% block content %}
+    <section class="container">
+        <h2 class="display-6">rejected list</h2>
+        <ul class="list-group">
+            {% for item in requests %}
+                <li class="list-group-item">
+                    {{ item.from_user }} to {{ item.to_user }}
+                    <a href="{% url 'to_requests_detail' item.id %}">view</a>
+                </li>
+                {% empty %}
+                <div>no requests</div>
+
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

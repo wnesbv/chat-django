@@ -1,0 +1,67 @@
+
+{% extends 'index.html' %}
+{% load static %}
+{% load request_tag %}
+{% block title %}user chat{% endblock %}
+
+{% block user_chat %}
+
+    <section class="container my-2">
+        <h2 class="display-6 container">simple-chat django channels redis
+            <sub class="mx-1">
+                {{ user.nickname }}
+            </sub>
+        </h2>
+        <hr>
+        <sup><i class='bi bi-record-circle'></i> ... on the website</sup>
+        <div>
+            {% active_users in 5 minutes as user_list %}
+            {% for user in user_list %}
+                <i class="bi bi-record-circle"></i></i><span class="mx-1">{{ user.nickname }}</span>
+            {% endfor %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <sub><i class='bi bi-record-circle'></i> ... in the chat</sub>
+            <ul class="list-inline mb-5">
+
+                {% for item in user_index %}
+                    <li class="list-inline-item">
+                        <input type="hidden" value="{{ item.nickname }}" id="room-name-input{{ item.id }}" name="nickname">
+                        <a class="btn btn-outline-primary btn-sm my-4" id="room-name-submit{{ item.id }}">
+                            {% if item.status %}
+                                <i class='bi bi-record-circle'></i>
+                                {% else %}
+                                <i class='bi bi-circle'></i>
+                                <time>{{ item.status_time|timesince }}</time>
+                            {% endif %}
+                            <span class="mx-1">
+                                {{ item.nickname }}
+                            </span>
+                            <i class="bi bi-pencil"></i>...
+                        </a>
+                    </li>
+
+                    <script>
+                        document.querySelector('#room-name-input{{ item.id }}').focus();
+                        document.querySelector('#room-name-submit{{ item.id }}').onclick = function (e) {
+                            const room_name = document.querySelector('#room-name-input{{ item.id }}').value;
+                            window.location.replace(`/chat/${room_name}/`);
+                        };
+                    </script>
+                {% endfor %}
+
+                <li class="list-group-item">
+                    <input id="username-input" type="hidden" value="{{ item.nickname }}">
+                </li>
+            </ul>
+        {% endif %}
+
+    </section>
+
+{% endblock %}
+
+{% block chat %}
+{% endblock %}
+{% block js %}
+{% endblock %}

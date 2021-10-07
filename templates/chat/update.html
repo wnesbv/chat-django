@@ -1,0 +1,28 @@
+
+
+{% extends "index.html" %}
+{% block title %} chat update {% endblock %}
+
+{% block content %}
+
+    <section class="container">
+        <h2 class="display-6"><small>chat update <sub>update</sub></small></h2>
+        <form class="card m-2" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+                <ul class="list-group m-2">
+                    <li>{{ form.msg_chat.errors }}</li>
+                    <li class="my-2">{{ form.msg_chat.label_tag }}</li>
+                    <li class="list-group-item">{{ form.msg_chat }}</li>
+                </ul>
+                <div class="my-2">
+                    <a class="btn btn-sm btn-outline-primary" href="{% url 'chat' %}">cancellation and refund</a>
+                </div>
+                <div class="my-2">
+                    <button class="btn btn-sm btn-outline-danger" type="submit">update</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+{% endblock content %}

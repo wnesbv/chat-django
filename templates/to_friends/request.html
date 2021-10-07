@@ -1,0 +1,47 @@
+
+
+{% extends "index.html" %}
+{% block title %} View a particular friendship request {% endblock %}
+
+{% block content %}
+
+	<section class="container">
+		<h2 class="display-6">View a particular friendship request
+			<small>
+			<sub class="mx-2">{{ friendship_request.from_user }}</sub>
+			<sub class="text-muted">wants to be friends with</sub>
+			<sub class="mx-2">{{ friendship_request.to_user }}</sub>
+			</small>
+		</h2>
+		<ul class="list-group my-4">
+            <li class="list-group-item">
+                {{ friendship_request.created }}
+            </li>
+            <li class="list-group-item">
+                {{ friendship_request.accompanying_text }}
+            </li>
+        </ul>
+        <ul class="list-inline">
+        	<li class="list-inline-item">
+				<form method="post" action="{% url 'to_accept' friendship_request.pk %}">
+					{% csrf_token %}
+					<input class="btn btn-sm btn-outline-primary" type="submit" value="accept" />
+				</form>
+			</li>
+			<li class="list-inline-item">
+				<form method="post" action="{% url 'to_reject' friendship_request.pk %}">
+					{% csrf_token %}
+					<input class="btn btn-sm btn-outline-danger" type="submit" value="reject" />
+				</form>
+			</li>
+			<li class="list-inline-item">
+				<form method="post" action="{% url 'to_cancel' friendship_request.pk %}">
+					{% csrf_token %}
+					<input class="btn btn-sm btn-outline-danger" type="submit" value="cancel" />
+				</form>
+			</li>
+
+		</ul>
+	</section>
+
+{% endblock %}

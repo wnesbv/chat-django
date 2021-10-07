@@ -1,0 +1,28 @@
+
+
+{% extends "index.html" %}
+{% block title %} new requests {% endblock %}
+
+{% block content %}
+
+    <section class="container">
+        <h2 class="display-6">new requests for friendship list</h2>
+        <ul class="list-group my-4">
+            {% for item in requests %}
+                {% if user == item.to_user %}
+                    <li class="list-group-item">
+                        {{ item.created }}
+                    </li>
+                    <li class="list-group-item">
+                        {{ item.accompanying_text }}
+                    </li>
+                    <li class="list-group-item">
+                        {{ item.from_user }} to {{ item.to_user }}
+                        <a class="btn btn-sm btn-outline-primary m-4" href="{% url 'to_requests_detail' item.id %}">view</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </section>
+
+{% endblock %}
